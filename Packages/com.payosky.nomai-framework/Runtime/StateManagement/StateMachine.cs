@@ -7,7 +7,7 @@ namespace NomaiFramework.StateManagement
     /// <summary>
     /// Represents a state machine that manages transitions between states implementing the <see cref="IState"/> interface.
     /// </summary>
-    public sealed class StateMachine : IStateMachine
+    public class StateMachine : IStateMachine
     {
         public event Action<IStateMachine, IState, IState> OnStateChangeRequested;
         public event Action<IStateMachine, IState, IState> OnStateChanged;
@@ -16,10 +16,10 @@ namespace NomaiFramework.StateManagement
         public event Action<IStateMachine, IState> OnStateLoadStarted;
         public event Action<IStateMachine, IState> OnStateLoadFinished;
 
-        public IState PreviousState { get; private set; }
-        public IState CurrentState { get; private set; }
+        public IState PreviousState { get; protected set; }
+        public IState CurrentState { get; protected set; }
 
-        public async UniTask SetState(IState newState)
+        public virtual async UniTask SetState(IState newState)
         {
             OnStateChangeRequested?.Invoke(this, CurrentState, newState);
             await ExitCurrentState();
@@ -30,7 +30,7 @@ namespace NomaiFramework.StateManagement
             OnStateChanged?.Invoke(this, PreviousState, CurrentState);
         }
 
-        private async UniTask ExitCurrentState()
+        protected virtual async UniTask ExitCurrentState()
         {
             if (CurrentState == null) return;
 # if DEBUG
@@ -41,7 +41,7 @@ namespace NomaiFramework.StateManagement
             OnStateUnloadFinished?.Invoke(this, CurrentState);
         }
 
-        private async UniTask EnterCurrentState()
+        protected virtual async UniTask EnterCurrentState()
         {
             if (CurrentState == null) return;
 # if DEBUG
@@ -52,7 +52,7 @@ namespace NomaiFramework.StateManagement
             OnStateLoadFinished?.Invoke(this, CurrentState);
         }
 
-        private async UniTaskVoid StartStateTick()
+        protected virtual async UniTaskVoid StartStateTick()
         {
             if (CurrentState == null) return;
 
@@ -64,7 +64,7 @@ namespace NomaiFramework.StateManagement
             }
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             SetState(null).Forget();
         }

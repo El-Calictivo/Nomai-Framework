@@ -4,6 +4,16 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-09-15
+
+### 🚀 Features
+
+- Allow StateMachine to be inherited
+
+### 🐛 Bug Fixes
+
+- Typos and incosistent assemblies filenames
+
 ## [0.1.1] - 2026-09-11
 
 ### 💼 Other
