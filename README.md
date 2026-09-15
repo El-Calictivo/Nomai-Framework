@@ -10,7 +10,7 @@ The framework provides reusable systems for common application-level concerns su
 
 * **Unity:** 6000.0 or newer
 * **Package:** `com.payosky.nomai-framework`
-* **Current Version:** `0.1.1`
+* **Current Version:** `0.2.0`
 
 ## Installation
 
